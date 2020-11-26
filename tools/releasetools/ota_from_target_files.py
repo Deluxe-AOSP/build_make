@@ -819,13 +819,9 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
     # Stage 3/3: Make changes.
     script.Comment("Stage 3/3")
 
-  # Inform User
-  script.Print("BackupTool at Work");
-
   # Dump fingerprints
   script.Print("Target: {}".format(target_info.fingerprint))
 
-  script.AppendExtra("ifelse(is_mounted(\"/system\"), unmount(\"/system\"));")
   device_specific.FullOTA_InstallBegin()
 
   CopyInstallTools(output_zip)
@@ -864,10 +860,9 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
   buildid = target_info.GetBuildProp("ro.build.id")
   buildday = target_info.GetBuildProp("ro.build.date")
   securep = target_info.GetBuildProp("ro.build.version.security_patch")
-  device = target_info.GetBuildProp("ro.product.name")
+  device = target_info.GetBuildProp("ro.product.device")
   manufacturer = target_info.GetBuildProp("ro.product.manufacturer")
 
-  script.Print("***********************************************");
   script.Print(" ROM version      : %s"%(legionversion));
   script.Print("");
   script.Print(" Android version  : %s"%(androidver));
@@ -881,7 +876,7 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
   script.Print(" Device           : %s"%(device));
   script.Print("");
   script.Print(" Manufacturer     : %s"%(manufacturer));
-  script.Print("***********************************************");
+  script.Print("--------------------------------------------------");
 
   if OPTIONS.wipe_user_data:
     system_progress -= 0.1

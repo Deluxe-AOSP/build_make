@@ -2916,10 +2916,7 @@ PARTITION_TYPES = {
     "ext4": "EMMC",
     "emmc": "EMMC",
     "f2fs": "EMMC",
-    "squashfs": "EMMC",
-    "ext2": "EMMC",
-    "ext3": "EMMC",
-    "vfat": "EMMC"
+    "squashfs": "EMMC"
 }
 
 def GetTypeAndDevice(mount_point, info, check_no_slot=True):
