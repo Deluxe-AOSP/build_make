@@ -202,10 +202,6 @@ A/B OTA specific options
       ones. Should only be used if caller knows it's safe to do so (e.g. all the
       postinstall work is to dexopt apps and a data wipe will happen immediately
       after). Only meaningful when generating A/B OTAs.
-
-  --backup <boolean>
-      Enable or disable the execution of backuptool.sh.
-      Disabled by default.
 """
 
 from __future__ import print_function
@@ -271,7 +267,6 @@ OPTIONS.disable_fec_computation = False
 OPTIONS.force_non_ab = False
 OPTIONS.boot_variable_file = None
 
-OPTIONS.backuptool = False
 
 METADATA_NAME = 'META-INF/com/android/metadata'
 POSTINSTALL_CONFIG = 'META/postinstall_config.txt'
@@ -833,11 +828,6 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
   script.SetPermissionsRecursive("/tmp/install", 0, 0, 0755, 0644, None, None)
   script.SetPermissionsRecursive("/tmp/install/bin", 0, 0, 0755, 0755, None, None)
 
-  if OPTIONS.backuptool:
-    script.Mount("/system")
-    script.RunBackup("backup")
-    script.Unmount("/system")
-
   script.Print("BackupTool Work Done");
 
   # All other partitions as well as the data wipe use 10% of the progress, and
@@ -908,12 +898,6 @@ else if get_stage("%(bcb_dev)s") == "3/3" then
       "boot.img", "boot.img", OPTIONS.input_tmp, "BOOT")
   common.CheckSize(boot_img.data, "boot.img", target_info)
   common.ZipWriteStr(output_zip, "boot.img", boot_img.data)
-
-  if OPTIONS.backuptool:
-    script.ShowProgress(0.02, 10)
-    script.Mount("/system")
-    script.RunBackup("restore")
-    script.Unmount("/system")
 
   script.WriteRawImage("/boot", "boot.img")
 
@@ -2189,8 +2173,6 @@ def main(argv):
       OPTIONS.force_non_ab = True
     elif o == "--boot_variable_file":
       OPTIONS.boot_variable_file = a
-    elif o in ("--backup"):
-      OPTIONS.backuptool = bool(a.lower() == 'true')
     else:
       return False
     return True
@@ -2229,7 +2211,6 @@ def main(argv):
                                  "disable_fec_computation",
                                  "force_non_ab",
                                  "boot_variable_file=",
-                                 "backup=",
                              ], extra_option_handler=option_handler)
 
   if len(args) != 2:
