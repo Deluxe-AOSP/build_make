@@ -293,8 +293,8 @@ include $(BUILD_SYSTEM)/envsetup.mk
 # See envsetup.mk for a description of SCAN_EXCLUDE_DIRS
 FIND_LEAVES_EXCLUDES := $(addprefix --prune=, $(SCAN_EXCLUDE_DIRS) .repo .git)
 
-ifneq ($(LEGION_BUILD),)
-include vendor/legion/config/BoardConfigLegion.mk
+ifneq ($(DELUXE_BUILD),)
+include vendor/deluxe/config/BoardConfigDeluxe.mk
 endif
 
 # General entries for project pathmap.  Any entries listed here should
@@ -1254,11 +1254,11 @@ endif
 DEFAULT_DATA_OUT_MODULES := ltp $(ltp_packages) $(kselftest_modules)
 .KATI_READONLY := DEFAULT_DATA_OUT_MODULES
 
-ifneq ($(LEGION_BUILD),)
-ifneq ($(wildcard device/legion/sepolicy/common/sepolicy.mk),)
+ifneq ($(DELUXE_BUILD),)
+ifneq ($(wildcard device/deluxe/sepolicy/common/sepolicy.mk),)
 ## We need to be sure the global selinux policies are included
 ## last, to avoid accidental resetting by device configs
-$(eval include device/legion/sepolicy/common/sepolicy.mk)
+$(eval include device/deluxe/sepolicy/common/sepolicy.mk)
 endif
 endif
 

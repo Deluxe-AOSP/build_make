@@ -53,6 +53,6 @@ echo "ro.build.description=$PRIVATE_BUILD_DESC"
 if [ -n "$BUILD_THUMBPRINT" ] ; then
   echo "ro.build.thumbprint=$BUILD_THUMBPRINT"
 fi
-echo "ro.legion.device=$LEGION_DEVICE"
+echo "ro.deluxe.device=$DELUXE_DEVICE"
 
 echo "# end build properties"
